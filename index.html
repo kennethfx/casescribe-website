@@ -1,0 +1,1702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CaseScribe — The AI Copilot for Employment Services</title>
+  <meta name="description" content="CaseScribe helps Employment Services staff spend less time on administration and compliance paperwork, and more time helping participants achieve employment outcomes." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --navy: #0F2D52;
+      --navy-light: #1F3A5F;
+      --emerald: #00A878;
+      --emerald-dark: #008F65;
+      --emerald-light: #E6F7F3;
+      --charcoal: #1E293B;
+      --bg: #F8FAFC;
+      --white: #FFFFFF;
+      --border: #E2E8F0;
+      --text-secondary: #64748B;
+      --text-tertiary: #94A3B8;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--white);
+      color: var(--charcoal);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 40px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .nav-logo-mark {
+      width: 32px;
+      height: 32px;
+      background: var(--navy);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .nav-logo-text {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--navy);
+      letter-spacing: -0.02em;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .nav-link {
+      font-size: 14px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.15s;
+    }
+
+    .nav-link:hover { color: var(--charcoal); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.15s;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--emerald);
+      color: white;
+    }
+
+    .btn-primary:hover { background: var(--emerald-dark); transform: translateY(-1px); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--navy);
+      border: 1.5px solid var(--navy);
+    }
+
+    .btn-outline:hover { background: var(--navy); color: white; }
+
+    .btn-lg {
+      padding: 14px 28px;
+      font-size: 15px;
+      border-radius: 10px;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 140px 40px 100px;
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--emerald-light);
+      color: var(--emerald-dark);
+      font-size: 12.5px;
+      font-weight: 600;
+      padding: 5px 12px;
+      border-radius: 99px;
+      margin-bottom: 24px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .hero-eyebrow-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--emerald);
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+
+    .hero h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 52px;
+      line-height: 1.1;
+      color: var(--navy);
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--emerald);
+    }
+
+    .hero-sub {
+      font-size: 17px;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      margin-bottom: 12px;
+    }
+
+    .hero-built-by {
+      font-size: 13.5px;
+      color: var(--text-tertiary);
+      margin-bottom: 36px;
+      font-style: italic;
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .hero-visual {
+      position: relative;
+    }
+
+    .hero-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      box-shadow: 0 20px 60px rgba(15,45,82,0.12), 0 4px 16px rgba(15,45,82,0.06);
+      overflow: hidden;
+    }
+
+    .hero-card-header {
+      background: var(--navy);
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .hero-card-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .hero-card-label {
+      color: rgba(255,255,255,0.6);
+      font-size: 12px;
+      margin-left: 4px;
+    }
+
+    .hero-card-body {
+      padding: 16px;
+    }
+
+    .mock-participant {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      background: var(--bg);
+      border-radius: 8px;
+      margin-bottom: 12px;
+    }
+
+    .mock-avatar {
+      width: 32px;
+      height: 32px;
+      background: var(--emerald);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 13px;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+
+    .mock-name { font-size: 13px; font-weight: 600; color: var(--navy); }
+    .mock-phase { font-size: 11.5px; color: var(--text-secondary); }
+
+    .mock-note-lines { display: flex; flex-direction: column; gap: 7px; margin-bottom: 12px; }
+    .mock-line {
+      height: 8px;
+      background: var(--border);
+      border-radius: 4px;
+      animation: shimmer 2.5s ease-in-out infinite;
+    }
+
+    .mock-line.emerald { background: var(--emerald-light); }
+    .mock-line.navy { background: #E8EFF7; }
+
+    @keyframes shimmer {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.6; }
+    }
+
+    .mock-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: var(--emerald-light);
+      color: var(--emerald-dark);
+      font-size: 11.5px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 99px;
+    }
+
+    .hero-stat-strip {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .hero-stat {
+      background: var(--bg);
+      border-radius: 8px;
+      padding: 10px 12px;
+      text-align: center;
+    }
+
+    .hero-stat-num {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--navy);
+      letter-spacing: -0.02em;
+    }
+
+    .hero-stat-label {
+      font-size: 10.5px;
+      color: var(--text-tertiary);
+      margin-top: 2px;
+    }
+
+    /* ── SECTIONS ── */
+    section { padding: 100px 40px; }
+
+    .section-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-eyebrow {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--emerald);
+      margin-bottom: 14px;
+    }
+
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 38px;
+      color: var(--navy);
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+
+    .section-sub {
+      font-size: 16px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      max-width: 560px;
+    }
+
+    /* ── PROBLEM ── */
+    .problem {
+      background: var(--navy);
+      color: white;
+    }
+
+    .problem .section-eyebrow { color: var(--emerald); }
+    .problem .section-title { color: white; }
+    .problem .section-sub { color: rgba(255,255,255,0.65); max-width: 100%; }
+
+    .problem-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: start;
+      margin-top: 56px;
+    }
+
+    .pain-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .pain-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 16px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      transition: background 0.15s;
+    }
+
+    .pain-item:hover { background: rgba(255,255,255,0.09); }
+
+    .pain-icon {
+      width: 36px;
+      height: 36px;
+      background: rgba(0,168,120,0.15);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 16px;
+    }
+
+    .pain-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: white;
+      margin-bottom: 4px;
+    }
+
+    .pain-desc {
+      font-size: 13px;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.5;
+    }
+
+    .problem-outcome {
+      background: rgba(0,168,120,0.1);
+      border: 1px solid rgba(0,168,120,0.25);
+      border-radius: 12px;
+      padding: 28px;
+    }
+
+    .problem-outcome-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 26px;
+      color: white;
+      margin-bottom: 12px;
+      line-height: 1.3;
+    }
+
+    .problem-outcome-body {
+      font-size: 14px;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+
+    .time-waste {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .time-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .time-label { font-size: 12.5px; color: rgba(255,255,255,0.6); }
+
+    .time-bar-wrap {
+      flex: 1;
+      height: 6px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+
+    .time-bar { height: 100%; background: var(--emerald); border-radius: 99px; }
+    .time-pct { font-size: 12px; font-weight: 600; color: var(--emerald); width: 36px; text-align: right; }
+
+    /* ── VALUE PROPS ── */
+    .value-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 56px;
+    }
+
+    .value-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 28px;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+
+    .value-card:hover {
+      box-shadow: 0 12px 40px rgba(15,45,82,0.1);
+      transform: translateY(-2px);
+    }
+
+    .value-card-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      margin-bottom: 16px;
+    }
+
+    .value-card-icon.emerald { background: var(--emerald-light); }
+    .value-card-icon.navy { background: #EEF2F7; }
+    .value-card-icon.amber { background: #FFFBEB; }
+
+    .value-card-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
+
+    .value-card-body {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* ── FEATURES ── */
+    .features { background: var(--bg); }
+
+    .feature-list {
+      display: flex;
+      flex-direction: column;
+      gap: 80px;
+      margin-top: 60px;
+    }
+
+    .feature-item {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .feature-item.reverse { direction: rtl; }
+    .feature-item.reverse > * { direction: ltr; }
+
+    .feature-eyebrow {
+      font-size: 11.5px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--emerald);
+      margin-bottom: 12px;
+    }
+
+    .feature-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 28px;
+      color: var(--navy);
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+      margin-bottom: 14px;
+    }
+
+    .feature-body {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+
+    .feature-points {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .feature-point {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--charcoal);
+    }
+
+    .feature-point-check {
+      width: 18px;
+      height: 18px;
+      background: var(--emerald-light);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .feature-visual {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(15,45,82,0.08);
+    }
+
+    .feature-visual-header {
+      background: var(--navy);
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .fvh-dot { width: 8px; height: 8px; border-radius: 50%; }
+    .fvh-label { font-size: 11.5px; color: rgba(255,255,255,0.5); margin-left: 4px; }
+
+    .feature-visual-body { padding: 16px; }
+
+    /* mock UI elements */
+    .mock-note-block {
+      background: var(--bg);
+      border-radius: 8px;
+      padding: 12px 14px;
+      margin-bottom: 10px;
+    }
+
+    .mock-note-section-title {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--navy);
+      margin-bottom: 6px;
+    }
+
+    .mock-lines { display: flex; flex-direction: column; gap: 6px; }
+    .mock-l { height: 7px; background: var(--border); border-radius: 4px; }
+
+    .mock-milestone-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 12px;
+      border-radius: 8px;
+      margin-bottom: 6px;
+      font-size: 12.5px;
+    }
+
+    .mock-milestone-row.green { background: var(--emerald-light); color: var(--emerald-dark); }
+    .mock-milestone-row.amber { background: #FFFBEB; color: #B45309; }
+    .mock-milestone-row.gray { background: var(--bg); color: var(--text-secondary); }
+
+    .mock-milestone-dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
+
+    .mock-tl-stat {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .mock-tl-stat-item {
+      background: var(--bg);
+      border-radius: 8px;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .mock-tl-num { font-size: 22px; font-weight: 600; color: var(--navy); }
+    .mock-tl-label { font-size: 10px; color: var(--text-tertiary); }
+
+    .mock-flag {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 8px 10px;
+      border-radius: 7px;
+      margin-bottom: 6px;
+      font-size: 12px;
+    }
+
+    .mock-flag.red { background: #FEF2F2; color: #991B1B; }
+    .mock-flag.amber { background: #FFFBEB; color: #92400E; }
+    .mock-flag.green { background: var(--emerald-light); color: #065F46; }
+
+    /* ── WHO IT'S FOR ── */
+    .audience-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 56px;
+    }
+
+    .audience-card {
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 28px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .audience-card:hover {
+      border-color: var(--emerald);
+      box-shadow: 0 8px 30px rgba(0,168,120,0.1);
+    }
+
+    .audience-role {
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--emerald);
+      margin-bottom: 8px;
+    }
+
+    .audience-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 10px;
+    }
+
+    .audience-body {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    .audience-points {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .audience-point {
+      font-size: 13px;
+      color: var(--charcoal);
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+    }
+
+    .audience-point::before {
+      content: '→';
+      color: var(--emerald);
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+
+    /* ── TESTIMONIAL ── */
+    .testimonial-section { background: var(--bg); }
+
+    .testimonial-card {
+      max-width: 760px;
+      margin: 56px auto 0;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 48px;
+      position: relative;
+      box-shadow: 0 8px 32px rgba(15,45,82,0.06);
+    }
+
+    .testimonial-quote-mark {
+      font-family: 'DM Serif Display', serif;
+      font-size: 80px;
+      color: var(--emerald-light);
+      line-height: 0.5;
+      margin-bottom: 24px;
+      display: block;
+    }
+
+    .testimonial-text {
+      font-family: 'DM Serif Display', serif;
+      font-size: 22px;
+      color: var(--navy);
+      line-height: 1.5;
+      margin-bottom: 28px;
+      font-style: italic;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .testimonial-avatar {
+      width: 44px;
+      height: 44px;
+      background: var(--navy);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .testimonial-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--navy);
+    }
+
+    .testimonial-role {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    /* ── PILOT / CTA ── */
+    .pilot { background: var(--white); }
+
+    .pilot-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 56px;
+    }
+
+    .pilot-card {
+      border-radius: 16px;
+      padding: 36px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .pilot-card.individual {
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+    }
+
+    .pilot-card.team {
+      background: var(--navy);
+      color: white;
+    }
+
+    .pilot-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11.5px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      padding: 4px 10px;
+      border-radius: 99px;
+      margin-bottom: 20px;
+      width: fit-content;
+    }
+
+    .pilot-tag.individual { background: var(--emerald-light); color: var(--emerald-dark); }
+    .pilot-tag.team { background: rgba(0,168,120,0.2); color: var(--emerald); }
+
+    .pilot-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 26px;
+      margin-bottom: 12px;
+      letter-spacing: -0.01em;
+    }
+
+    .pilot-card.individual .pilot-title { color: var(--navy); }
+    .pilot-card.team .pilot-title { color: white; }
+
+    .pilot-body {
+      font-size: 14px;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    .pilot-card.individual .pilot-body { color: var(--text-secondary); }
+    .pilot-card.team .pilot-body { color: rgba(255,255,255,0.65); }
+
+    .pilot-perks {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 28px;
+      flex: 1;
+    }
+
+    .pilot-perk {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13.5px;
+    }
+
+    .pilot-card.individual .pilot-perk { color: var(--charcoal); }
+    .pilot-card.team .pilot-perk { color: rgba(255,255,255,0.85); }
+
+    .pilot-perk-check {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 11px;
+    }
+
+    .pilot-card.individual .pilot-perk-check { background: var(--emerald-light); color: var(--emerald); }
+    .pilot-card.team .pilot-perk-check { background: rgba(0,168,120,0.2); color: var(--emerald); }
+
+    .pilot-cta-individual {
+      background: var(--emerald);
+      color: white;
+      padding: 13px 24px;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 500;
+      text-align: center;
+      text-decoration: none;
+      transition: background 0.15s, transform 0.15s;
+      display: block;
+    }
+
+    .pilot-cta-individual:hover { background: var(--emerald-dark); transform: translateY(-1px); }
+
+    .pilot-cta-team {
+      background: white;
+      color: var(--navy);
+      padding: 13px 24px;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 500;
+      text-align: center;
+      text-decoration: none;
+      transition: all 0.15s;
+      display: block;
+    }
+
+    .pilot-cta-team:hover { background: var(--emerald); color: white; transform: translateY(-1px); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy);
+      color: rgba(255,255,255,0.5);
+      padding: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .footer-logo-mark {
+      width: 28px;
+      height: 28px;
+      background: var(--emerald);
+      border-radius: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .footer-logo-text { color: white; font-size: 14px; font-weight: 600; }
+
+    .footer-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    .footer-link {
+      font-size: 13px;
+      color: rgba(255,255,255,0.45);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .footer-link:hover { color: white; }
+
+    .footer-copy { font-size: 12.5px; }
+
+    /* ── RESPONSIVE ── */
+    .faq-item {
+      border-top: 1px solid var(--border);
+      padding: 0;
+    }
+
+    .faq-q {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 20px 0;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--navy);
+      user-select: none;
+    }
+
+    .faq-q:hover { color: var(--emerald); }
+
+    .faq-chevron {
+      flex-shrink: 0;
+      color: var(--text-tertiary);
+      transition: transform 0.2s;
+    }
+
+    .faq-chevron.open { transform: rotate(180deg); }
+
+    .faq-a {
+      display: none;
+      font-size: 14.5px;
+      color: var(--text-secondary);
+      line-height: 1.75;
+      padding-bottom: 20px;
+    }
+
+    .faq-a.open { display: block; }
+
+    @media (max-width: 900px) {
+      .security-grid { grid-template-columns: 1fr 1fr !important; }
+      nav { padding: 0 20px; }
+      .nav-link { display: none; }
+
+      .hero {
+        grid-template-columns: 1fr;
+        padding: 100px 20px 60px;
+        gap: 48px;
+      }
+
+      .hero h1 { font-size: 38px; }
+
+      .problem-grid { grid-template-columns: 1fr; gap: 40px; }
+      .value-cards { grid-template-columns: 1fr; }
+      .feature-item { grid-template-columns: 1fr; gap: 32px; }
+      .feature-item.reverse { direction: ltr; }
+      .audience-grid { grid-template-columns: 1fr; }
+      .pilot-grid { grid-template-columns: 1fr; }
+      .how-it-works-grid { grid-template-columns: 1fr !important; }
+      .how-it-works-line { display: none !important; }
+      .testimonial-card { padding: 28px; }
+      .testimonial-text { font-size: 18px; }
+
+      section { padding: 60px 20px; }
+      footer { flex-direction: column; align-items: flex-start; gap: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="/" class="nav-logo">
+      <div class="nav-logo-mark">CS</div>
+      <span class="nav-logo-text">CaseScribe</span>
+    </a>
+    <div class="nav-actions">
+      <a href="#pilot" class="nav-link">Early Access</a>
+      <a href="#pilot" class="nav-link">Book a Demo</a>
+      <a href="https://app.casescribe.com.au" class="btn btn-primary">Sign in</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section style="padding-top:0;padding-bottom:0;">
+    <div class="hero">
+      <div class="hero-content">
+        <div class="hero-eyebrow">
+          <div class="hero-eyebrow-dot"></div>
+          Now in Early Access
+        </div>
+        <h1>The AI Copilot for <em>Employment Services</em></h1>
+        <p class="hero-sub">CaseScribe helps Employment Mentors generate IEA-compliant case notes in seconds, track outcome milestones automatically, and gives Team Leaders the visibility they need — so your team spends more time placing participants, not filing paperwork.</p>
+        <p class="hero-built-by">Built by an Employment Specialist for Employment Services.</p>
+        <div class="hero-ctas">
+          <a href="https://app.casescribe.com.au/login.html#signup" class="btn btn-primary btn-lg">Start your free pilot</a>
+          <a href="mailto:hello@casescribe.com.au?subject=Team Demo Request" class="btn btn-outline btn-lg">Book a Team Demo</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-card">
+          <div class="hero-card-header">
+            <div class="hero-card-dot" style="background:#ef4444;"></div>
+            <div class="hero-card-dot" style="background:#f59e0b;margin-left:4px;"></div>
+            <div class="hero-card-dot" style="background:#22c55e;margin-left:4px;"></div>
+            <span class="hero-card-label">Generate case note — CaseScribe</span>
+          </div>
+          <div class="hero-card-body">
+            <div class="mock-participant">
+              <div class="mock-avatar">S</div>
+              <div>
+                <div class="mock-name">Sarah M.</div>
+                <div class="mock-phase">Job Search · Active</div>
+              </div>
+            </div>
+            <div class="mock-note-lines">
+              <div class="mock-line emerald" style="width:90%;"></div>
+              <div class="mock-line" style="width:78%;"></div>
+              <div class="mock-line" style="width:85%;"></div>
+              <div class="mock-line" style="width:60%;"></div>
+              <div class="mock-line navy" style="width:72%;"></div>
+              <div class="mock-line" style="width:88%;"></div>
+            </div>
+            <div class="mock-badge">
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1.5 5l2.5 2.5 4.5-4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Note generated in 4 seconds
+            </div>
+            <div class="hero-stat-strip">
+              <div class="hero-stat">
+                <div class="hero-stat-num">~1hr</div>
+                <div class="hero-stat-label">saved daily</div>
+              </div>
+              <div class="hero-stat">
+                <div class="hero-stat-num">17</div>
+                <div class="hero-stat-label">templates</div>
+              </div>
+              <div class="hero-stat">
+                <div class="hero-stat-num">IEA</div>
+                <div class="hero-stat-label">compliant</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROBLEM -->
+  <section class="problem">
+    <div class="section-inner">
+      <div class="section-eyebrow">The challenge</div>
+      <h2 class="section-title">Employment Services teams spend too much time on administration.</h2>
+      <p class="section-sub">Every hour spent on documentation is an hour not spent supporting participants into employment.</p>
+
+      <div class="problem-grid">
+        <div class="pain-list">
+          <div class="pain-item">
+            <div class="pain-icon">📝</div>
+            <div>
+              <div class="pain-title">Case notes after every appointment</div>
+              <div class="pain-desc">Writing compliant, detailed notes for every contact takes 15–30 minutes each time.</div>
+            </div>
+          </div>
+          <div class="pain-item">
+            <div class="pain-icon">📋</div>
+            <div>
+              <div class="pain-title">Job Plans that need constant updating</div>
+              <div class="pain-desc">Job Plans must be current and appropriate — reviewing and updating them is time-consuming.</div>
+            </div>
+          </div>
+          <div class="pain-item">
+            <div class="pain-icon">⚠️</div>
+            <div>
+              <div class="pain-title">Compliance documentation and fee tracking</div>
+              <div class="pain-desc">Missing a progress fee or outcome milestone costs real revenue. Manual tracking is error-prone.</div>
+            </div>
+          </div>
+          <div class="pain-item">
+            <div class="pain-icon">📅</div>
+            <div>
+              <div class="pain-title">Appointment preparation</div>
+              <div class="pain-desc">Reviewing participant history and preparing for appointments adds time before every meeting.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="problem-outcome">
+          <div class="problem-outcome-title">The result: less time for what matters most.</div>
+          <div class="problem-outcome-body">When administrative tasks consume 2–3 hours of each working day, Employment Mentors have less time for the relationship-building, job matching, and employer engagement that actually moves participants into employment.</div>
+          <div style="display:flex;flex-direction:column;gap:14px;margin-top:8px;">
+            <div style="display:flex;align-items:flex-start;gap:12px;">
+              <div style="width:32px;height:32px;background:rgba(0,168,120,0.15);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:15px;">⏱</div>
+              <div>
+                <div style="font-size:13.5px;font-weight:600;color:white;margin-bottom:3px;">Up to an hour a day on documentation</div>
+                <div style="font-size:13px;color:rgba(255,255,255,0.55);">Case notes, job plans, and compliance paperwork consume a significant portion of every working day for most Employment Mentors.</div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:12px;">
+              <div style="width:32px;height:32px;background:rgba(0,168,120,0.15);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:15px;">💸</div>
+              <div>
+                <div style="font-size:13.5px;font-weight:600;color:white;margin-bottom:3px;">Missed fees cost real revenue</div>
+                <div style="font-size:13px;color:rgba(255,255,255,0.55);">Progress fees, outcome milestones, and servicing deadlines are easy to miss when tracked manually. Each missed claim is direct revenue loss.</div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:12px;">
+              <div style="width:32px;height:32px;background:rgba(0,168,120,0.15);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:15px;">👁</div>
+              <div>
+                <div style="font-size:13.5px;font-weight:600;color:white;margin-bottom:3px;">Team Leaders lack real-time visibility</div>
+                <div style="font-size:13px;color:rgba(255,255,255,0.55);">Without a clear view of caseload health and compliance status, managers are always reactive — finding out about problems too late.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VALUE PROPS -->
+  <section style="background:var(--white);">
+    <div class="section-inner">
+      <div class="section-eyebrow">Why CaseScribe</div>
+      <h2 class="section-title">Built for employment services. Not adapted from something else.</h2>
+      <p class="section-sub">CaseScribe understands IEA compliance, outcome fees, servicing requirements, and the daily realities of employment services work.</p>
+
+      <div class="value-cards">
+        <div class="value-card">
+          <div class="value-card-icon emerald">⚡</div>
+          <div class="value-card-title">Save time every day</div>
+          <div class="value-card-body">Generate compliant case notes from rough notes or voice recordings in seconds. 17 role-specific templates built for EM, IWM, and EES workflows.</div>
+        </div>
+        <div class="value-card">
+          <div class="value-card-icon navy">🛡️</div>
+          <div class="value-card-title">Reduce compliance risk</div>
+          <div class="value-card-body">Built-in outcome and servicing fee trackers, IEA policy assistant, and milestone alerts mean nothing falls through the cracks.</div>
+        </div>
+        <div class="value-card">
+          <div class="value-card-icon amber">🎯</div>
+          <div class="value-card-title">Focus on outcomes</div>
+          <div class="value-card-body">When administration takes minutes instead of hours, your team has more time for the engagement, referrals, and employer relationships that drive placements.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section style="background:var(--white);padding:80px 40px;">
+    <div class="section-inner">
+      <div class="section-eyebrow">How it works</div>
+      <h2 class="section-title">A better note in under 60 seconds.</h2>
+      <p class="section-sub">No setup, no configuration, no learning curve. CaseScribe fits into how your team already works.</p>
+
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:56px;position:relative;">
+        <!-- connecting line -->
+        <div style="position:absolute;top:28px;left:calc(16.6% + 20px);right:calc(16.6% + 20px);height:2px;background:linear-gradient(to right,var(--emerald-light),var(--emerald),var(--emerald-light));z-index:0;"></div>
+
+        <div style="text-align:center;position:relative;z-index:1;">
+          <div style="width:56px;height:56px;background:var(--navy);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;color:white;font-size:20px;box-shadow:0 0 0 6px var(--white),0 0 0 8px var(--emerald-light);">🎙</div>
+          <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--emerald);margin-bottom:8px;">Step 1</div>
+          <div style="font-size:17px;font-weight:600;color:var(--navy);margin-bottom:10px;font-family:'DM Serif Display',serif;">Record or type your rough notes</div>
+          <div style="font-size:14px;color:var(--text-secondary);line-height:1.6;">After an appointment, speak or type a quick summary of what happened. No structure required — just describe it naturally.</div>
+        </div>
+
+        <div style="text-align:center;position:relative;z-index:1;">
+          <div style="width:56px;height:56px;background:var(--emerald);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;color:white;font-size:20px;box-shadow:0 0 0 6px var(--white),0 0 0 8px var(--emerald-light);">⚡</div>
+          <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--emerald);margin-bottom:8px;">Step 2</div>
+          <div style="font-size:17px;font-weight:600;color:var(--navy);margin-bottom:10px;font-family:'DM Serif Display',serif;">CaseScribe generates a compliant note</div>
+          <div style="font-size:14px;color:var(--text-secondary);line-height:1.6;">AI generates a structured, IEA-compliant case note using the right template for your role. Review and edit if needed.</div>
+        </div>
+
+        <div style="text-align:center;position:relative;z-index:1;">
+          <div style="width:56px;height:56px;background:var(--navy);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;color:white;font-size:20px;box-shadow:0 0 0 6px var(--white),0 0 0 8px var(--emerald-light);">✓</div>
+          <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--emerald);margin-bottom:8px;">Step 3</div>
+          <div style="font-size:17px;font-weight:600;color:var(--navy);margin-bottom:10px;font-family:'DM Serif Display',serif;">Save to the participant record</div>
+          <div style="font-size:14px;color:var(--text-secondary);line-height:1.6;">One click saves the note to the participant. Milestone trackers and servicing reminders update automatically.</div>
+        </div>
+      </div>
+
+      <div style="text-align:center;margin-top:48px;">
+        <a href="https://app.casescribe.com.au/login.html#signup" class="btn btn-primary btn-lg">Try it now — it's free</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features">
+    <div class="section-inner">
+      <div class="section-eyebrow">Features</div>
+      <h2 class="section-title">Everything your team needs. Nothing they don't.</h2>
+
+      <div class="feature-list">
+
+        <!-- Feature 1: Note generation -->
+        <div class="feature-item">
+          <div class="feature-content">
+            <div class="feature-eyebrow">AI case notes</div>
+            <h3 class="feature-title">Stop spending 20 minutes writing every contact note</h3>
+            <p class="feature-body">Type rough notes or record your voice after an appointment. CaseScribe generates a structured, IEA-compliant case note using the right template for your role — EM, IWM, or EES.</p>
+            <div class="feature-points">
+              <div class="feature-point">
+                <div class="feature-point-check">✓</div>
+                17 role-specific templates including initial interview, contact, placement, re-engagement, and more
+              </div>
+              <div class="feature-point">
+                <div class="feature-point-check">✓</div>
+                Voice recording with automatic transcription
+              </div>
+              <div class="feature-point">
+                <div class="feature-point-check">✓</div>
+                Learns your writing style so notes sound like you
+              </div>
+            </div>
+          </div>
+          <div class="feature-visual">
+            <div class="feature-visual-header">
+              <div class="fvh-dot" style="background:#ef4444;"></div>
+              <div class="fvh-dot" style="background:#f59e0b;"></div>
+              <div class="fvh-dot" style="background:#22c55e;"></div>
+              <span class="fvh-label">Generate case note</span>
+            </div>
+            <div class="feature-visual-body">
+              <div class="mock-note-block">
+                <div class="mock-note-section-title">Contact</div>
+                <div class="mock-lines">
+                  <div class="mock-l" style="width:92%;"></div>
+                  <div class="mock-l" style="width:78%;"></div>
+                </div>
+              </div>
+              <div class="mock-note-block">
+                <div class="mock-note-section-title">Discussion</div>
+                <div class="mock-lines">
+                  <div class="mock-l" style="width:88%;"></div>
+                  <div class="mock-l" style="width:95%;"></div>
+                  <div class="mock-l" style="width:72%;"></div>
+                </div>
+              </div>
+              <div class="mock-note-block">
+                <div class="mock-note-section-title">Actions and next steps</div>
+                <div class="mock-lines">
+                  <div class="mock-l" style="width:85%;"></div>
+                  <div class="mock-l" style="width:60%;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Feature 2: Outcome tracking -->
+        <div class="feature-item reverse">
+          <div class="feature-content">
+            <div class="feature-eyebrow">Outcome and fee tracking</div>
+            <h3 class="feature-title">Missing one outcome milestone costs you real money</h3>
+            <p class="feature-body">CaseScribe tracks every participant's placement date, anchor date, and outcome milestones — and alerts you when a fee is approaching. Stop losing revenue to missed deadlines.</p>
+            <div class="feature-points">
+              <div class="feature-point">
+                <div class="feature-point-check">✓</div>
+                Progress fee alerts from job commencement date (24 hours over 4 weeks)
+              </div>
+              <div class="feature-point">
+                <div class="feature-point-check">✓</div>
+                12-week, 26-week, and 52-week outcome milestone tracking
+              </div>
+              <div class="feature-point">
+                <div class="feature-point-check">✓</div>
+                Rolling 90-day servicing contact tracker per participant
+              </div>
+            </div>
+          </div>
+          <div class="feature-visual">
+            <div class="feature-visual-header">
+              <div class="fvh-dot" style="background:#ef4444;"></div>
+              <div class="fvh-dot" style="background:#f59e0b;"></div>
+              <div class="fvh-dot" style="background:#22c55e;"></div>
+              <span class="fvh-label">Outcome tracker — Sarah M.</span>
+            </div>
+            <div class="feature-visual-body">
+              <div class="mock-milestone-row green">
+                <span>✓ 4-week progress fee</span>
+                <div class="mock-milestone-dot"></div>
+              </div>
+              <div class="mock-milestone-row amber">
+                <span>⚠ 12-week outcome — 8 days</span>
+                <div class="mock-milestone-dot"></div>
+              </div>
+              <div class="mock-milestone-row gray">
+                <span>26-week outcome — 98 days</span>
+                <div class="mock-milestone-dot"></div>
+              </div>
+              <div class="mock-milestone-row gray">
+                <span>52-week outcome — 280 days</span>
+                <div class="mock-milestone-dot"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Feature 3: Team Leader -->
+        <div class="feature-item">
+          <div class="feature-content">
+            <div class="feature-eyebrow">Team Leader dashboard</div>
+            <h3 class="feature-title">Know which EMs need support before problems surface</h3>
+            <p class="feature-body">Team Leaders get an AI-generated coaching plan for each EM — covering caseload health, servicing compliance, outcome pipeline, priority flags, and 1:1 coaching questions.</p>
+            <div class="feature-points">
+              <div class="feature-point">
+                <div class="feature-point-check">✓</div>
+                EM performance snapshot — On Track, Watch, or At Risk
+              </div>
+              <div class="feature-point">
+                <div class="feature-point-check">✓</div>
+                Priority flags: participants falling through the cracks, unanchored placements, overdue milestones
+              </div>
+              <div class="feature-point">
+                <div class="feature-point-check">✓</div>
+                Auto-generated 1:1 coaching questions based on real caseload data
+              </div>
+            </div>
+          </div>
+          <div class="feature-visual">
+            <div class="feature-visual-header">
+              <div class="fvh-dot" style="background:#ef4444;"></div>
+              <div class="fvh-dot" style="background:#f59e0b;"></div>
+              <div class="fvh-dot" style="background:#22c55e;"></div>
+              <span class="fvh-label">Team Leader — Sarah M.</span>
+            </div>
+            <div class="feature-visual-body">
+              <div class="mock-tl-stat">
+                <div class="mock-tl-stat-item">
+                  <div class="mock-tl-num">24</div>
+                  <div class="mock-tl-label">Active</div>
+                </div>
+                <div class="mock-tl-stat-item">
+                  <div class="mock-tl-num" style="color:#B45309;">3</div>
+                  <div class="mock-tl-label">No contact 30d</div>
+                </div>
+                <div class="mock-tl-stat-item">
+                  <div class="mock-tl-num" style="color:#22A06B;">8</div>
+                  <div class="mock-tl-label">Placed</div>
+                </div>
+              </div>
+              <div class="mock-flag red">⚠ Li Wang — no contact in 34 days</div>
+              <div class="mock-flag amber">↑ Silvia K. — placement not anchored (18 days)</div>
+              <div class="mock-flag green">$ Sarah M. — 12-week outcome due in 8 days</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- WHO IT'S FOR -->
+  <section style="background:var(--white);">
+    <div class="section-inner">
+      <div class="section-eyebrow">Who it's for</div>
+      <h2 class="section-title">Built for every role in your team.</h2>
+
+      <div class="audience-grid">
+        <div class="audience-card">
+          <div class="audience-role">Employment Mentor</div>
+          <div class="audience-title">Spend more time with participants</div>
+          <div class="audience-body">Generate compliant case notes from voice or rough notes, track outcome milestones, and prepare for appointments in seconds.</div>
+          <div class="audience-points">
+            <div class="audience-point">AI case notes in seconds</div>
+            <div class="audience-point">Voice recording and transcription</div>
+            <div class="audience-point">17 role-specific templates</div>
+            <div class="audience-point">Outcome and servicing trackers</div>
+            <div class="audience-point">CV and cover letter generation</div>
+          </div>
+        </div>
+
+        <div class="audience-card">
+          <div class="audience-role">Team Leader</div>
+          <div class="audience-title">Manage with visibility, not guesswork</div>
+          <div class="audience-body">See your team's caseload health, compliance status, and revenue pipeline at a glance — and get AI-generated coaching prompts for every 1:1.</div>
+          <div class="audience-points">
+            <div class="audience-point">EM performance snapshots</div>
+            <div class="audience-point">Servicing and compliance tracking</div>
+            <div class="audience-point">Revenue pipeline visibility</div>
+            <div class="audience-point">Priority flags and risk alerts</div>
+            <div class="audience-point">1:1 coaching questions</div>
+          </div>
+        </div>
+
+        <div class="audience-card">
+          <div class="audience-role">Service Manager</div>
+          <div class="audience-title">Your team is meeting compliance. You can prove it.</div>
+          <div class="audience-body">Servicing gaps, missed outcome fees, and inconsistent documentation are invisible until they become a problem. CaseScribe surfaces risk before it costs you.</div>
+          <div class="audience-points">
+            <div class="audience-point">Real-time servicing compliance visibility</div>
+            <div class="audience-point">Outcome revenue pipeline tracking</div>
+            <div class="audience-point">Staff consistency and documentation quality</div>
+            <div class="audience-point">Evidence of team productivity for reporting</div>
+            <div class="audience-point">Australian data sovereignty and security</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIAL -->
+  <section class="testimonial-section">
+    <div class="section-inner" style="text-align:center;">
+      <div class="section-eyebrow">From the field</div>
+      <h2 class="section-title">What Employment Services professionals say</h2>
+
+      <div class="testimonial-card">
+        <span class="testimonial-quote-mark">"</span>
+        <p class="testimonial-text">After using CaseScribe for several weeks, I found that routine tasks such as case notes, appointment summaries and document drafting were completed significantly faster. On busy days, it easily saves me close to an hour that would otherwise be spent on administration.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">EP</div>
+          <div>
+            <div class="testimonial-name">Employment Services Professional</div>
+            <div class="testimonial-role">IEA — Early Access Pilot</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PILOT / CTA -->
+  <section class="pilot" id="pilot">
+    <div class="section-inner">
+      <div class="section-eyebrow">Early access program</div>
+      <h2 class="section-title">Become a Pilot Partner</h2>
+      <p class="section-sub">We're currently onboarding a limited number of Employment Mentors, Team Leaders and Employment Services teams. Pilot partners receive complimentary access and direct founder support.</p>
+
+      <div class="pilot-grid">
+        <div class="pilot-card individual">
+          <div class="pilot-tag individual">For individuals</div>
+          <div class="pilot-title">Get Early Access</div>
+          <div class="pilot-body">Start using CaseScribe today. No credit card required. Perfect for Employment Mentors and In Work Mentors who want to reduce their daily admin load.</div>
+          <div class="pilot-perks">
+            <div class="pilot-perk">
+              <div class="pilot-perk-check">✓</div>
+              Complimentary access during pilot
+            </div>
+            <div class="pilot-perk">
+              <div class="pilot-perk-check">✓</div>
+              Personal onboarding support
+            </div>
+            <div class="pilot-perk">
+              <div class="pilot-perk-check">✓</div>
+              Priority feature requests
+            </div>
+            <div class="pilot-perk">
+              <div class="pilot-perk-check">✓</div>
+              Early access to new features
+            </div>
+          </div>
+          <a href="https://app.casescribe.com.au/login.html#signup" class="pilot-cta-individual">Start your free pilot →</a>
+        </div>
+
+        <div class="pilot-card team">
+          <div class="pilot-tag team">For teams</div>
+          <div class="pilot-title">Book a Team Demo</div>
+          <div class="pilot-body">For Team Leaders and Service Managers considering CaseScribe for their team. We'll walk you through the platform and tailor the pilot to your team's needs.</div>
+          <div class="pilot-perks">
+            <div class="pilot-perk">
+              <div class="pilot-perk-check">✓</div>
+              Guided team onboarding
+            </div>
+            <div class="pilot-perk">
+              <div class="pilot-perk-check">✓</div>
+              Team Leader dashboard setup
+            </div>
+            <div class="pilot-perk">
+              <div class="pilot-perk-check">✓</div>
+              Usage and adoption analytics
+            </div>
+            <div class="pilot-perk">
+              <div class="pilot-perk-check">✓</div>
+              Compliance and security briefing
+            </div>
+          </div>
+          <a href="mailto:hello@casescribe.com.au?subject=Team Demo Request" class="pilot-cta-team">Book a demo →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECURITY TRUST -->
+  <section style="background:var(--bg);padding:80px 40px;">
+    <div class="section-inner">
+      <div class="section-eyebrow">Security & trust</div>
+      <h2 class="section-title">Built to protect participant data.</h2>
+      <p class="section-sub">Employment services work involves sensitive participant information. CaseScribe is built with that responsibility in mind.</p>
+
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:48px;" class="security-grid">
+
+        <div style="background:white;border:1px solid var(--border);border-radius:14px;padding:24px;">
+          <div style="width:44px;height:44px;background:var(--emerald-light);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:16px;">🇦🇺</div>
+          <div style="font-size:15px;font-weight:600;color:var(--navy);margin-bottom:8px;">Data stored in Australia</div>
+          <div style="font-size:13.5px;color:var(--text-secondary);line-height:1.6;">All participant data is stored on Australian servers in Sydney. Your data never leaves Australia.</div>
+        </div>
+
+        <div style="background:white;border:1px solid var(--border);border-radius:14px;padding:24px;">
+          <div style="width:44px;height:44px;background:var(--emerald-light);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:16px;">🔒</div>
+          <div style="font-size:15px;font-weight:600;color:var(--navy);margin-bottom:8px;">Encrypted end to end</div>
+          <div style="font-size:13.5px;color:var(--text-secondary);line-height:1.6;">All data is encrypted in transit and at rest. Access is protected by secure authentication and session management.</div>
+        </div>
+
+        <div style="background:white;border:1px solid var(--border);border-radius:14px;padding:24px;">
+          <div style="width:44px;height:44px;background:var(--emerald-light);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:16px;">🚫</div>
+          <div style="font-size:15px;font-weight:600;color:var(--navy);margin-bottom:8px;">Never trained on your data</div>
+          <div style="font-size:13.5px;color:var(--text-secondary);line-height:1.6;">Your participant data and case notes are never used to train AI models — by us or any of our AI providers.</div>
+        </div>
+
+        <div style="background:white;border:1px solid var(--border);border-radius:14px;padding:24px;">
+          <div style="width:44px;height:44px;background:var(--emerald-light);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:16px;">👤</div>
+          <div style="font-size:15px;font-weight:600;color:var(--navy);margin-bottom:8px;">Your data, only you</div>
+          <div style="font-size:13.5px;color:var(--text-secondary);line-height:1.6;">Row-level security ensures every user sees only their own participants and notes. No cross-team data leakage.</div>
+        </div>
+
+      </div>
+
+      <div style="text-align:center;margin-top:24px;">
+        <a href="https://app.casescribe.com.au/compliance.html" target="_blank" style="font-size:13.5px;color:var(--emerald);text-decoration:none;font-weight:500;">Read our full security and compliance documentation →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section style="background:white;padding:80px 40px;">
+    <div class="section-inner">
+      <div class="section-eyebrow">FAQ</div>
+      <h2 class="section-title">Common questions.</h2>
+
+      <div style="max-width:720px;margin:48px auto 0;display:flex;flex-direction:column;gap:0;">
+
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span>Is using CaseScribe compliant with IEA requirements?</span>
+            <svg class="faq-chevron" width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4.5 6.75l4.5 4.5 4.5-4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="faq-a">
+            CaseScribe is a productivity tool — it helps Employment Mentors draft case notes faster and track compliance requirements. WAOP remains the system of record for all IEA compliance obligations. Notes generated by CaseScribe should be reviewed, edited as needed, and saved to your system of record as usual. The platform is built around IEA v1.1.4 guidelines, including servicing requirements, outcome fee rules, and the Targeted Compliance Framework — but it does not replace any mandatory recording obligations under the Deed.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span>Is CaseScribe an app I need to install?</span>
+            <svg class="faq-chevron" width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4.5 6.75l4.5 4.5 4.5-4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="faq-a">
+            No installation required. CaseScribe runs entirely in your web browser — on desktop, tablet, or mobile. Just go to app.casescribe.com.au, log in, and you're ready to use it. Nothing to install, no IT approval required for individual access.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span>Can it work alongside my current CRM or case management system?</span>
+            <svg class="faq-chevron" width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4.5 6.75l4.5 4.5 4.5-4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="faq-a">
+            Yes. CaseScribe works alongside your existing tools — WAOP, your organisation's CRM, SharePoint, or any other system. It does not replace them. The typical workflow is: use CaseScribe to generate and review a case note, then copy it into your system of record. Most EMs find this takes seconds. Native integrations with specific CRMs are on the roadmap for future development.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span>How accurate are the AI-generated notes?</span>
+            <svg class="faq-chevron" width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4.5 6.75l4.5 4.5 4.5-4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="faq-a">
+            CaseScribe generates notes based on what you provide — the more detail in your rough notes or voice recording, the more accurate the output. The AI understands IEA terminology, templates, and compliance language. Templates are generic and IEA-compliant out of the box. If your organisation uses a specific note format, paste it into the template customiser — CaseScribe will follow your exact headings from that point on. Every note should be reviewed before saving. Think of it as a highly capable first draft that you refine — not a finished document you accept without reading.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span>How much does CaseScribe cost?</span>
+            <svg class="faq-chevron" width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4.5 6.75l4.5 4.5 4.5-4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="faq-a">
+            CaseScribe is currently in early access — pilot users receive complimentary access while we validate the product with real employment services teams. Pricing will be per seat per month, designed to be accessible for individual EMs and scalable for teams. We will give pilot users advance notice before any paid plans begin, and early access partners will receive preferential pricing. To discuss team pricing, book a demo.
+          </div>
+        </div>
+
+        <div class="faq-item" style="border-bottom:none;">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span>Can our whole team use it?</span>
+            <svg class="faq-chevron" width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4.5 6.75l4.5 4.5 4.5-4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="faq-a">
+            Yes. CaseScribe supports Employment Mentors, In Work Mentors, Employer Engagement Specialists, and Team Leaders — each with role-specific templates and features. Team Leaders get a dedicated dashboard showing caseload health, compliance status, and outcome pipeline across their team. For team onboarding, book a demo and we'll set your team up together.
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">
+      <div class="footer-logo-mark">CS</div>
+      <span class="footer-logo-text">CaseScribe</span>
+    </div>
+    <div class="footer-links">
+      <a href="https://app.casescribe.com.au/privacy.html" class="footer-link">Privacy Policy</a>
+      <a href="https://app.casescribe.com.au/terms.html" class="footer-link">Terms of Service</a>
+      <a href="https://app.casescribe.com.au/compliance.html" class="footer-link">Security</a>
+      <a href="mailto:hello@casescribe.com.au" class="footer-link">Contact</a>
+    </div>
+    <div class="footer-copy">© 2026 CaseScribe. Built in Australia for Employment Services.</div>
+  </footer>
+
+  <script>
+    function toggleFaq(el) {
+      const answer = el.nextElementSibling;
+      const chevron = el.querySelector('.faq-chevron');
+      const isOpen = answer.classList.contains('open');
+      // Close all
+      document.querySelectorAll('.faq-a').forEach(a => a.classList.remove('open'));
+      document.querySelectorAll('.faq-chevron').forEach(c => c.classList.remove('open'));
+      // Open this one if it was closed
+      if (!isOpen) {
+        answer.classList.add('open');
+        chevron.classList.add('open');
+      }
+    }
+  </script>
+</body>
+</html>
